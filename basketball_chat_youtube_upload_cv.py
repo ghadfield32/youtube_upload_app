@@ -6,19 +6,27 @@ from ultralytics import YOLO
 
 
 def chatbot_ui(message=None):
+    if "chat_log" not in st.session_state:
+        st.session_state.chat_log = ""
+
     if message:
-        st.sidebar.markdown(f"🏀 **Pro says:** {message}")
-    
-    prompt = st.sidebar.chat_input()
+        st.session_state.chat_log += f"🏀 **Pro says:** {message}\n"
+
+    prompt = st.sidebar.text_input("Your message:")
+
     if prompt:
+        st.session_state.chat_log += f"**You:** {prompt}\n"
         try:
             st.session_state.messages.append({"role": "user", "content": prompt})
             response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
             response_text = response.choices[0].message["content"].strip()
             st.session_state.messages.append({"role": "assistant", "content": response_text})
-            st.sidebar.markdown(f"🏀 **Pro says:** {response_text}")
+            st.session_state.chat_log += f"🏀 **Pro says:** {response_text}\n"
         except openai.error.RateLimitError:
-            st.warning("Sorry, seems like the Pro is taking a break. Please try again later!")
+            st.session_state.chat_log += "Sorry, seems like the Pro is taking a break. Please try again later!\n"
+
+    st.sidebar.markdown(st.session_state.chat_log)
+
 
 
 def main():
@@ -28,7 +36,7 @@ def main():
         initial_sidebar_state="auto",
     )
     
-    openai.api_key = st.secrets["openai_key"]
+    openai_key = "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"
 
     st.sidebar.title("🏀 Chat with a Basketball Pro!")
     st.sidebar.write("Hey there! I've seen plenty of plays in my time. Share a video and let me guide you through what I see.")
