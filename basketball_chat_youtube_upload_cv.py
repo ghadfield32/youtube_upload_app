@@ -36,8 +36,8 @@ def main():
         initial_sidebar_state="auto",
     )
     
-    openai.api_key = st.secrets["openai_key"]
-    
+    #openai.api_key = st.secrets["openai_key"]
+    openai.api_key = "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"
 
     st.sidebar.title("🏀 Chat with a Basketball Pro!")
     st.sidebar.write("Hey there! I've seen plenty of plays in my time. Share a video and let me guide you through what I see.")
