@@ -1,4 +1,4 @@
-opencv-python==4.8.0.76    # This is the pip package for cv2
-streamlit==0.88.0
-pytube==10.9.2
-ultralytics-yolov5==5.0.0 # Assuming this is the correct pip package for Ultralytics' YOLO. Double-check based on where you got the YOLO implementation.
+opencv-python
+streamlit
+pytube
+ultralytics-yolov8
